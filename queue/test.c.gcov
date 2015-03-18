@@ -1,0 +1,101 @@
+        -:    0:Source:test.c
+        -:    0:Graph:test.gcno
+        -:    0:Data:test.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include <stdlib.h>
+        -:    3:#include "queue.h"
+        -:    4:
+        -:    5:/*
+        -:    6:Queue *CreateMyQueue();
+        -:    7:
+        -:    8:int Enqueue(int data, Queue *queue);
+        -:    9:
+        -:   10:int GetHead(Queue *queue);
+        -:   11:
+        -:   12:int GetTail(Queue *queue);
+        -:   13:
+        -:   14:int Dequeue(Queue **queue);
+        -:   15:
+        -:   16:int Size(Queue *queue);
+        -:   17:
+        -:   18:int isEmpty(Queue *queue);
+        -:   19:
+        -:   20:void DeleteQueue(Queue *queue);
+        -:   21:
+        -:   22:
+        -:   23:**--------------- ITERATOR --------------------**
+        -:   24:
+        -:   25:Iterator *CreateIterator(Queue *queue);
+        -:   26:
+        -:   27:Next GetNext(Iterator *iter);
+        -:   28:
+        -:   29:void RestartIter(Iterator *iter);
+        -:   30:
+        -:   31:void DeleteIterator(Iterator *iter);
+        -:   32:*/
+        -:   33:
+        -:   34:int main()
+        -:   35:{
+        -:   36:    /***QUEUE TEST***/
+        -:   37:
+        1:   38:    printf("\n/***QUEUE TEST***/\n");
+        -:   39:
+        1:   40:    Queue *queue = CreateMyQueue();
+       24:   41:    for (int i = 0; i <= 10; i++)
+       11:   42:        Enqueue(i, queue);
+        1:   43:    printf("GETHEAD %d\n", GetHead(queue));
+        1:   44:    printf("GETTAIL %d\n", GetTail(queue));
+        -:   45:
+       14:   46:    for (int i = 0; i <= 5; i++)
+        6:   47:        printf("Dequeue %d\n", Dequeue(queue));
+        -:   48:
+        1:   49:    printf("GETHEAD %d\n", GetHead(queue));
+        1:   50:    printf("isEmpty? %d\n", isEmpty(queue));
+        -:   51:
+        1:   52:    printf("SIZE %d\n", Size(queue));
+       12:   53:    for (int i = 0; i < 5; i++)
+        5:   54:        printf("Dequeue %d\n", Dequeue(queue));
+        1:   55:    printf("isEmpty? %d\n\n", isEmpty(queue));
+        -:   56:
+        1:   57:    printf("DeleteQueue\n");
+        1:   58:    DeleteQueue(queue);
+        -:   59:
+        1:   60:    printf("Enqueue\n");
+        -:   61:    /*** ITERATOR TEST ***/
+        -:   62:
+        1:   63:    Queue *queue1 = CreateMyQueue();
+       24:   64:    for (int i = 0; i <= 10; i++)
+       11:   65:        Enqueue(i, queue1);
+        1:   66:    printf("\n/*** ITERATOR TEST ***/\n");
+        1:   67:    printf("\nLets find the max\n");
+        -:   68:
+        1:   69:    Iterator *iter = CreateIterator(queue1);
+        1:   70:    Next tmp;
+        -:   71:    int max;
+        1:   72:    max = GetNext(iter).data;
+       12:   73:    while ((tmp = GetNext(iter)).isThereNext != 0)
+        -:   74:    {
+       10:   75:        if (tmp.data > max)
+       10:   76:            max = tmp.data;
+        -:   77:    }
+        -:   78:
+        -:   79:
+        1:   80:    printf("MAX = %d\n", max);
+        1:   81:    printf("GETNEXT: %d\n", GetNext(iter).data);
+        1:   82:    printf("RestartIter\n");
+        1:   83:    RestartIter(iter);
+        1:   84:    printf("And after restart GETNEXT1: %d\n", GetNext(iter).data);
+        1:   85:    printf("And after restart GETNEXT2: %d\n", GetNext(iter).data);
+        1:   86:    printf("And after restart GETNEXT3: %d\n", GetNext(iter).data);
+        1:   87:    printf("And after restart GETNEXT4: %d\n", GetNext(iter).data);
+        -:   88:
+        1:   89:    printf("So.....\n\n");
+        1:   90:    printf("DELETE ITER!\n");
+        1:   91:    DeleteIterator(iter);
+        1:   92:    printf("And after delete GETNEXT: %d\n", GetNext(iter).data);
+        -:   93:
+        1:   94:    return 0;
+        -:   95:
+        -:   96:}
