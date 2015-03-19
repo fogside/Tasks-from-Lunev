@@ -13,135 +13,135 @@
         -:    8:#include <stdio.h>
         -:    9:#include <stdlib.h>
         -:   10:#include <assert.h>
-        -:   11:#include <string.h>
-        -:   12:#include "queue.h"
-        -:   13:
-        -:   14:typedef struct Nod
-        -:   15:{
-        -:   16:    void *next;
-        -:   17:    int data;
-        -:   18:} Nod;
-        -:   19:
-        -:   20:struct Queue
-        -:   21:{
-        -:   22:    Nod *tail;
-        -:   23:    Nod *head;
-        -:   24:};
-        -:   25:
-        -:   26:struct Iterator
-        -:   27:{
-        -:   28:    Nod *current;
-        -:   29:    Nod *head;
-        -:   30:};
-        -:   31:
-        -:   32:Queue *CreateMyQueue()
-        -:   33:{
-        3:   34:    Queue *queue = malloc(sizeof(Queue));
-        3:   35:    if (queue == NULL)
-        -:   36:    {
-    #####:   37:        perror("Memory allocating mistake");
-    #####:   38:        return NULL;
-        -:   39:    }
-        3:   40:    queue->head = NULL;
-        3:   41:    queue->tail = NULL;
-        3:   42:    return queue;
-        3:   43:}
-        -:   44:
-        4:   45:int GetHead(Queue *queue)
-        -:   46:{
-        4:   47:    if(queue==NULL)
-        -:   48:    {
-        1:   49:        perror("Bad queue pointer");
-        1:   50:        return -1;
-        -:   51:
-        -:   52:    }
-        3:   53:    if (queue->head == NULL)
-        -:   54:    {
-        1:   55:        perror("There's now head");
-        1:   56:        return -1;
-        -:   57:    }
-        2:   58:    return queue->head->data;
-        4:   59:}
-        -:   60:
-        3:   61:int GetTail(Queue *queue)
-        -:   62:{
-        3:   63:    if(queue==NULL)
-        -:   64:    {
-        1:   65:        perror("Bad queue pointer");
-        1:   66:        return -1;
-        -:   67:
-        -:   68:    }
-        2:   69:    if (queue->tail == NULL)
-        -:   70:    {
-        1:   71:        perror("There's no tail");
-        1:   72:        return -1;
-        -:   73:    }
-        1:   74:    return queue->tail->data;
-        3:   75:}
+        -:   11:#include "queue.h"
+        -:   12:
+        -:   13:typedef struct Nod
+        -:   14:{
+        -:   15:    void *next;
+        -:   16:    int data;
+        -:   17:} Nod;
+        -:   18:
+        -:   19:struct Queue
+        -:   20:{
+        -:   21:    Nod *tail;
+        -:   22:    Nod *head;
+        -:   23:};
+        -:   24:
+        -:   25:struct Iterator
+        -:   26:{
+        -:   27:    Nod *current;
+        -:   28:    Nod *head;
+        -:   29:};
+        -:   30:
+        -:   31:Queue *CreateMyQueue()
+        -:   32:{
+        3:   33:    Queue *queue = malloc(sizeof(Queue));
+        3:   34:    if (queue == NULL)
+        -:   35:    {
+    #####:   36:        perror("Memory allocating mistake");
+    #####:   37:        return NULL;
+        -:   38:    }
+        3:   39:    queue->head = NULL;
+        3:   40:    queue->tail = NULL;
+        3:   41:    return queue;
+        3:   42:}
+        -:   43:
+        4:   44:int GetHead(Queue *queue)
+        -:   45:{
+        4:   46:    if(queue==NULL)
+        -:   47:    {
+        1:   48:        perror("Bad queue pointer");
+        1:   49:        return -1;
+        -:   50:
+        -:   51:    }
+        3:   52:    if (queue->head == NULL)
+        -:   53:    {
+        1:   54:        perror("There's now head");
+        1:   55:        return -1;
+        -:   56:    }
+        2:   57:    return queue->head->data;
+        4:   58:}
+        -:   59:
+        3:   60:int GetTail(Queue *queue)
+        -:   61:{
+        3:   62:    if(queue==NULL)
+        -:   63:    {
+        1:   64:        perror("Bad queue pointer");
+        1:   65:        return -1;
+        -:   66:
+        -:   67:    }
+        2:   68:    if (queue->tail == NULL)
+        -:   69:    {
+        1:   70:        perror("There's no tail");
+        1:   71:        return -1;
+        -:   72:    }
+        1:   73:    return queue->tail->data;
+        3:   74:}
+        -:   75:
         -:   76:
-        -:   77:
-       23:   78:int Enqueue(int data, Queue *queue)
-        -:   79:{
-       23:   80:    if(queue==NULL)
-        -:   81:    {
-        1:   82:        perror("Bad queue pointer");
-        1:   83:        return -1;
-        -:   84:
-        -:   85:    }
-       22:   86:    Nod *new_nod = malloc(sizeof(Nod));
-       22:   87:    new_nod->data = data;
-       22:   88:    new_nod->next = NULL;
-       22:   89:    if ((queue->head) == NULL)
-        -:   90:    {
-        2:   91:        queue->head = new_nod;
-        2:   92:        queue->tail = new_nod;
-        2:   93:    }
-        -:   94:    else
-        -:   95:    {
-       20:   96:        queue->tail->next = new_nod;
-       20:   97:        queue->tail = new_nod;
-        -:   98:    }
-       22:   99:    return 0;
-       23:  100:}
-        -:  101:
-       13:  102:int Dequeue(Queue *queue)
-        -:  103:{
-       13:  104:    if(queue==NULL)
-        -:  105:    {
-        1:  106:        perror("Bad queue pointer");
-        1:  107:        return -1;
-        -:  108:
-        -:  109:    }
-       12:  110:    if (queue->head == NULL)
-        -:  111:    {
-        1:  112:        perror("There're no elements left to extract");
-        1:  113:        return -1;
-        -:  114:
-        -:  115:    }
-       11:  116:    int data = queue->head->data;
-       11:  117:    queue->head = queue->head->next;
-       11:  118:    return data;
-       13:  119:}
-        -:  120:
+       23:   77:int Enqueue(int data, Queue *queue)
+        -:   78:{
+       23:   79:    if(queue==NULL)
+        -:   80:    {
+        1:   81:        perror("Bad queue pointer");
+        1:   82:        return -1;
+        -:   83:
+        -:   84:    }
+       22:   85:    Nod *new_nod = malloc(sizeof(Nod));
+       22:   86:    new_nod->data = data;
+       22:   87:    new_nod->next = NULL;
+       22:   88:    if ((queue->head) == NULL)
+        -:   89:    {
+        2:   90:        queue->head = new_nod;
+        2:   91:        queue->tail = new_nod;
+        2:   92:    }
+        -:   93:    else
+        -:   94:    {
+       20:   95:        queue->tail->next = new_nod;
+       20:   96:        queue->tail = new_nod;
+        -:   97:    }
+       22:   98:    return 0;
+       23:   99:}
+        -:  100:
+       13:  101:int Dequeue(Queue *queue)
+        -:  102:{
+       13:  103:    if(queue==NULL)
+        -:  104:    {
+        1:  105:        perror("Bad queue pointer");
+        1:  106:        return -1;
+        -:  107:
+        -:  108:    }
+       12:  109:    if (queue->head == NULL)
+        -:  110:    {
+        1:  111:        perror("There're no elements left to extract");
+        1:  112:        return -1;
+        -:  113:
+        -:  114:    }
+       11:  115:    int data = queue->head->data;
+       11:  116:    Nod *tmp = queue->head->next;
+       11:  117:    free(queue->head);
+       11:  118:    queue->head = tmp;
+       11:  119:    return data;
+       13:  120:}
         -:  121:
-        3:  122:void DeleteQueue(Queue **queue)
-        -:  123:{
-        5:  124:    if((queue == NULL)||(*queue==NULL))
-        -:  125:    {
-        1:  126:        perror("Bad queue pointer");
-        1:  127:        return;
-        -:  128:
-        -:  129:    }
-        -:  130:    Nod *tmp;
-       13:  131:    while ((*queue)->head != NULL)
-        -:  132:    {
-        -:  133:        tmp = (*queue)->head;
-       11:  134:        (*queue)->head = (*queue)->head->next;
-       11:  135:        free(tmp);
-       11:  136:    }
-        2:  137:    free(*queue);
-        2:  138:    *queue = NULL;
-        5:  139:}
+        -:  122:
+        4:  123:void DeleteQueue(Queue *queue)
+        -:  124:{
+        4:  125:    if(queue == NULL)
+        -:  126:    {
+        1:  127:        perror("Bad queue pointer");
+        1:  128:        return;
+        -:  129:
+        -:  130:    }
+        -:  131:    Nod *tmp;
+       14:  132:    while (queue->head != NULL)
+        -:  133:    {
+        -:  134:        tmp = queue->head;
+       11:  135:        queue->head = queue->head->next;
+       11:  136:        free(tmp);
+       11:  137:    }
+        3:  138:    free(queue);
+        7:  139:}
         -:  140:
         2:  141:int Size(Queue *queue)
         -:  142:{
@@ -151,107 +151,106 @@
         1:  146:        return -1;
         -:  147:
         -:  148:    }
-        1:  149:    Iterator *iter = CreateIterator(queue);
+        1:  149:    Iterator *_iter = CreateIterator(queue);
         1:  150:    int count = 0;
-        6:  151:    while (IsThereNext(iter))
+        6:  151:    while (IsThereNext(_iter))
         -:  152:    {
         4:  153:        count++;
-        4:  154:        GetNext(iter);
+        4:  154:        GetNext(_iter);
         4:  155:    }
-        1:  156:    return count;
-        2:  157:}
-        -:  158:
-        3:  159:int isEmpty(Queue *queue)
-        -:  160:{
-        3:  161:    if(queue==NULL)
-        -:  162:    {
-        1:  163:        perror("Bad queue pointer");
-        1:  164:        return -1;
-        -:  165:
-        -:  166:    }
-        2:  167:    return (queue->head == NULL) ? 1 : 0;
-        3:  168:}
-        -:  169:
+        1:  156:    DeleteIterator(_iter);
+        1:  157:    return count;
+        2:  158:}
+        -:  159:
+        3:  160:int isEmpty(Queue *queue)
+        -:  161:{
+        3:  162:    if(queue==NULL)
+        -:  163:    {
+        1:  164:        perror("Bad queue pointer");
+        1:  165:        return -1;
+        -:  166:
+        -:  167:    }
+        2:  168:    return (queue->head == NULL) ? 1 : 0;
+        3:  169:}
         -:  170:
-        -:  171:/**-----------ITERATOR------------**/
-        -:  172:
+        -:  171:
+        -:  172:/**-----------ITERATOR------------**/
         -:  173:
         -:  174:
-        4:  175:Iterator *CreateIterator(Queue *queue)
-        -:  176:{
-        4:  177:    if(queue==NULL)
-        -:  178:    {
-        1:  179:        perror("Bad queue pointer");
-        1:  180:        return NULL;
-        -:  181:
-        -:  182:    }
-        3:  183:    if(queue->head == NULL)
-        -:  184:    {
-        1:  185:        perror("Empty queue was given");
-        1:  186:        return NULL;
-        -:  187:    }
-        2:  188:    Iterator *iter = malloc(sizeof(Iterator));
-        2:  189:    iter->head = queue->head;
-        2:  190:    iter->current = queue->head;
-        2:  191:    return iter;
-        4:  192:}
-        -:  193:
-       35:  194:int IsThereNext(Iterator *iter)
-        -:  195:{
-       35:  196:    if(iter==NULL)
-        -:  197:    {
-        1:  198:        perror("Bad iter pointer");
-        1:  199:        return -1;
-        -:  200:
-        -:  201:    }
-       34:  202:    if(iter->current->next == NULL)
-        2:  203:        return 0;
-       32:  204:    return 1;
-       35:  205:}
-        -:  206:
+        -:  175:
+        4:  176:Iterator *CreateIterator(Queue *queue)
+        -:  177:{
+        4:  178:    if(queue==NULL)
+        -:  179:    {
+        1:  180:        perror("Bad queue pointer");
+        1:  181:        return NULL;
+        -:  182:
+        -:  183:    }
+        3:  184:    if(queue->head == NULL)
+        -:  185:    {
+        1:  186:        perror("Empty queue was given");
+        1:  187:        return NULL;
+        -:  188:    }
+        2:  189:    Iterator *iter = malloc(sizeof(Iterator));
+        2:  190:    iter->head = queue->head;
+        2:  191:    iter->current = queue->head;
+        2:  192:    return iter;
+        4:  193:}
+        -:  194:
+       34:  195:int IsThereNext(Iterator *iter)
+        -:  196:{
+       34:  197:    if(iter==NULL)
+        -:  198:    {
+        1:  199:        perror("Bad iter pointer");
+        1:  200:        return -1;
+        -:  201:
+        -:  202:    }
+       33:  203:    if(iter->current->next == NULL)
+        2:  204:        return 0;
+       31:  205:    return 1;
+       34:  206:}
         -:  207:
-        2:  208:int GetCurrent(Iterator *iter)
-        -:  209:{
-        2:  210:    if(iter==NULL)
-        -:  211:    {
-        1:  212:        perror("Bad iter pointer");
-        1:  213:        return -1;
-        -:  214:    }
-        1:  215:    return iter->current->data;
-        2:  216:}
-        -:  217:
+        -:  208:
+        2:  209:int GetCurrent(Iterator *iter)
+        -:  210:{
+        2:  211:    if(iter==NULL)
+        -:  212:    {
+        1:  213:        perror("Bad iter pointer");
+        1:  214:        return -1;
+        -:  215:    }
+        1:  216:    return iter->current->data;
+        2:  217:}
         -:  218:
-       20:  219:int GetNext(Iterator *iter)
-        -:  220:{
-       20:  221:    if(iter==NULL)
-        -:  222:    {
-        1:  223:        perror("Bad iter pointer");
-        1:  224:        return -1;
-        -:  225:    }
-       19:  226:    assert(IsThereNext(iter));
-       19:  227:    iter->current = iter->current->next;
-       19:  228:    return iter->current->data;
-       20:  229:}
-        -:  230:
-        2:  231:void DeleteIterator(Iterator **iter)
-        -:  232:{
-        3:  233:    if((iter==NULL)||(*iter == NULL))
-        -:  234:    {
-        1:  235:        perror("Bad *iter pointer");
-        1:  236:        return;
-        -:  237:    }
-        1:  238:    free(*iter);
-        1:  239:    *iter = NULL;
-        -:  240:
-        3:  241:}
-        -:  242:
-        2:  243:int RestartIter(Iterator *iter)
-        -:  244:{
-        2:  245:    if(iter==NULL)
-        -:  246:    {
-        1:  247:        perror("Bad iter pointer");
-        1:  248:        return -1;
-        -:  249:    }
-        1:  250:    iter->current = iter->head;
-        1:  251:    return 0;
-        2:  252:}
+        -:  219:
+       19:  220:int GetNext(Iterator *iter)
+        -:  221:{
+       19:  222:    if(iter==NULL)
+        -:  223:    {
+        1:  224:        perror("Bad iter pointer");
+        1:  225:        return -1;
+        -:  226:    }
+       18:  227:    assert(IsThereNext(iter));
+       18:  228:    iter->current = iter->current->next;
+       18:  229:    return iter->current->data;
+       19:  230:}
+        -:  231:
+        3:  232:void DeleteIterator(Iterator *iter)
+        -:  233:{
+        3:  234:    if(iter==NULL)
+        -:  235:    {
+        1:  236:        perror("Bad *iter pointer");
+        1:  237:        return;
+        -:  238:    }
+        2:  239:    free(iter);
+        5:  240:}
+        -:  241:
+        2:  242:int RestartIter(Iterator *iter)
+        -:  243:{
+        2:  244:    if(iter==NULL)
+        -:  245:    {
+        1:  246:        perror("Bad iter pointer");
+        1:  247:        return -1;
+        -:  248:    }
+        1:  249:    iter->current = iter->head;
+        1:  250:    return 0;
+        2:  251:}

@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <string.h>
 #include "queue.h"
 
 typedef struct Nod
@@ -114,28 +113,29 @@ int Dequeue(Queue *queue)
 
     }
     int data = queue->head->data;
-    queue->head = queue->head->next;
+    Nod *tmp = queue->head->next;
+    free(queue->head);
+    queue->head = tmp;
     return data;
 }
 
 
-void DeleteQueue(Queue **queue)
+void DeleteQueue(Queue *queue)
 {
-    if((queue == NULL)||(*queue==NULL))
+    if(queue == NULL)
     {
         perror("Bad queue pointer");
         return;
 
     }
     Nod *tmp;
-    while ((*queue)->head != NULL)
+    while (queue->head != NULL)
     {
-        tmp = (*queue)->head;
-        (*queue)->head = (*queue)->head->next;
+        tmp = queue->head;
+        queue->head = queue->head->next;
         free(tmp);
     }
-    free(*queue);
-    *queue = NULL;
+    free(queue);
 }
 
 int Size(Queue *queue)
@@ -146,13 +146,14 @@ int Size(Queue *queue)
         return -1;
 
     }
-    Iterator *iter = CreateIterator(queue);
+    Iterator *_iter = CreateIterator(queue);
     int count = 0;
-    while (IsThereNext(iter))
+    while (IsThereNext(_iter))
     {
         count++;
-        GetNext(iter);
+        GetNext(_iter);
     }
+    DeleteIterator(_iter);
     return count;
 }
 
@@ -228,16 +229,14 @@ int GetNext(Iterator *iter)
     return iter->current->data;
 }
 
-void DeleteIterator(Iterator **iter)
+void DeleteIterator(Iterator *iter)
 {
-    if((iter==NULL)||(*iter == NULL))
+    if(iter==NULL)
     {
         perror("Bad *iter pointer");
         return;
     }
-    free(*iter);
-    *iter = NULL;
-
+    free(iter);
 }
 
 int RestartIter(Iterator *iter)
