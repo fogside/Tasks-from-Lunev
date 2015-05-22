@@ -20,7 +20,6 @@ struct start_end_point
     double end_point;
 };
 
-
 void *thread_func(void *structure)
 {
     // printf("here %d\n", (int)count);
@@ -28,17 +27,15 @@ void *thread_func(void *structure)
     double end_point = (*(struct start_end_point *)structure).end_point;
     double counter = start_point;
     double dx = 0.00000001;
-    double *sum = (double*)calloc(1,sizeof(double));
+    double sum = 0;
 
-    int i = 0;
     while(counter<end_point)
     {
-        *sum += counter*counter*dx;
-        counter+=dx;
-        i++;
+        sum += counter*counter*dx;
+        counter +=dx;
     }
-    //printf("sum: %lf, I:, Iterations: %d\n", *sum, i);
-    pthread_exit((void *)sum);
+    (*(struct start_end_point *)structure).start_point = sum;
+    return NULL;
 }
 
 
@@ -46,18 +43,18 @@ int main(int argc, const char * argv[]) {
 
     int n;
     //printf("I'm here!!!\n");
-    if(argc>0)
+    if(argc>1
+        )
         n = (int) strtol(argv[1], NULL, 10);
     else
     {
-        printf("Stupid yellow worm! \nPlease say the number of threads:\n");
+        printf("Stupid yellow worm!\n");
         return 0;
     }
 
 
     pthread_t *pthreads_ids = malloc(n*sizeof(pthread_t));
     struct start_end_point *points = calloc(n, sizeof(struct start_end_point));
-    double *value_ptr;
     double integral_sum = 0;
 
 
@@ -69,9 +66,8 @@ int main(int argc, const char * argv[]) {
     }
     for(int i = 0; i<n; i++)
     {
-        pthread_join(pthreads_ids[i], (void**)&value_ptr);
-        integral_sum += *value_ptr;
-        free(value_ptr);
+        pthread_join(pthreads_ids[i], NULL);
+        integral_sum += points[i].start_point;
     }
 
     printf("%lf\n",integral_sum);
